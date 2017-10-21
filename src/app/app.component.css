@@ -1,9 +1,21 @@
 .card {
   display: inline-block;
+  position: relative;
   width: 200px;
   height: 100px;
   background: red;
   margin: 20px;
+}
+.card.open:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  width: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  border: 20px solid transparent;	border-top: 20px solid black;
 }
 
 .details {

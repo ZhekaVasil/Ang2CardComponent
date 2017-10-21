@@ -1,4 +1,4 @@
-import { Component, ViewChildren, Directive, ViewChild, ElementRef, Renderer2} from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 
 let cards: any = [
   {
@@ -75,11 +75,13 @@ let expandedCard: any = {
 export class AppComponent {
   @ViewChild('wrapper') el: ElementRef;
   cards = cards;
-  previousExpandedIndex = this.cards.length;
+  previousExpandedIndex = Infinity;
 
-  public handleCardClick(e) {
-    if (e.target.className === 'details') return;
+  public handleCardClick(e, cardIndex) {
+    console.log(cardIndex);
     let target = e.path.find(path => path.className === 'card');
+
+    if (!target) return;
 
     let offsetTop = target.offsetTop,
         targetId = target.id,
@@ -88,7 +90,6 @@ export class AppComponent {
         lastElementIndex;
 
     this.cards.every((card, index, array) => {
-
      if (cardsInDOM[index].offsetTop > offsetTop) {
        lastElementIndex = index > this.previousExpandedIndex ? index - 1 : index;
        return false
@@ -99,13 +100,17 @@ export class AppComponent {
     });
 
     if (expandedIndex > -1) this.deleteExpandedCard(expandedIndex);
-    this.cards.splice(lastElementIndex, 0, Object.assign(expandedCard, this.cards.find(card => card.title === targetId).details));
+
+    let selectedCard = this.cards.find(card => card.title === targetId);
+    selectedCard.open = true;
+    this.cards.splice(lastElementIndex, 0, Object.assign(expandedCard, selectedCard.details));
     this.previousExpandedIndex = lastElementIndex;
   }
 
   public deleteExpandedCard(index) {
     let expandedIndex = index || this.cards.findIndex(card => card.expanded);
     this.cards.splice(expandedIndex, 1);
-    this.previousExpandedIndex = this.cards.length;
+    this.cards.forEach((card) => card.open = false);
+    this.previousExpandedIndex = Infinity;
   }
 }
