@@ -78,7 +78,7 @@ export class AppComponent {
   previousExpandedIndex = Infinity;
 
   public handleCardClick(e) {
-    let target = e.path.find(path => path.className === 'card');
+    let target = e.target.className === 'card' ? e.target : e.target.parentNode.className === 'card' ? e.target.parentNode : false;
 
     if (!target) return;
 
