@@ -1,0 +1,12 @@
+.card {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  background: red;
+  margin: 20px;
+}
+
+.details {
+  height: 200px;
+  background: yellow;
+}
