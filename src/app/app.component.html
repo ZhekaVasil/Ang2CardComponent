@@ -1,5 +1,7 @@
 <div class="wrapper" #wrapper>
-  <div *ngFor="let card of cards" (click)="handleCardClick($event)" class="{{ card.expanded ? 'details' : 'card' }}" id="{{card.title}}">
+  <div *ngFor="let card of cards" (click)="handleCardClick($event)"
+       class="{{ card.expanded ? 'details' : 'card' }}"
+       id="{{card.expanded ? 'card_details' : card.title}}">
     <div *ngIf="!card.expanded">
       {{ card.title }}
     </div>
